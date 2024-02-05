@@ -2,3 +2,4 @@ fastapi
 SQLAlchemy
 google-generativeai
 bcrypt
+uvicorn
