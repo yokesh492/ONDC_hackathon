@@ -3,3 +3,4 @@ SQLAlchemy
 google-generativeai
 bcrypt
 uvicorn
+pillow
