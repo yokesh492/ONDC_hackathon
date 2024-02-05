@@ -7,27 +7,27 @@ from fastapi.responses import JSONResponse
 
 router = APIRouter()
 
-@router.post("/register")
-async def register(user: schemas.UserCreate, db: Session = Depends(deps.get_db)):
-    db_user = crud.get_user(db, username=user.username)
-    if db_user:
-        raise HTTPException(status_code=400, detail="Username already registered")
-    return crud.create_user(db=db, user=user)
+# @router.post("/register")
+# async def register(user: schemas.UserCreate, db: Session = Depends(deps.get_db)):
+#     db_user = crud.get_user(db, username=user.username)
+#     if db_user:
+#         raise HTTPException(status_code=400, detail="Username already registered")
+#     return crud.create_user(db=db, user=user)
 
 
-@router.post("/login")
-async def login(user: schemas.UserCreate, db: Session = Depends(deps.get_db)):
-    db_user = db.query(models.User).filter(models.User.username == user.username).first()
-    if not db_user or not auth.verify_password(user.password, db_user.password):
-        raise HTTPException(status_code=401, detail="Incorrect username or password")
-    return {"message": "Login successful"}
+# @router.post("/login")
+# async def login(user: schemas.UserCreate, db: Session = Depends(deps.get_db)):
+#     db_user = db.query(models.User).filter(models.User.username == user.username).first()
+#     if not db_user or not auth.verify_password(user.password, db_user.password):
+#         raise HTTPException(status_code=401, detail="Incorrect username or password")
+#     return {"message": "Login successful"}
 
-@router.get("/catalogue/{user_id}", response_model=schemas.CatalogueResponse)
-def get_user_catalogue(user_id: int, db: Session = Depends(deps.get_db)):
-    catalogue_data = crud.get_catalogue_by_user_id(db, user_id=user_id)
-    if not catalogue_data:
-        raise HTTPException(status_code=404, detail="Catalogue data not found")
-    return {"catalogue": catalogue_data}
+# @router.get("/catalogue/{user_id}", response_model=schemas.CatalogueResponse)
+# def get_user_catalogue(user_id: int, db: Session = Depends(deps.get_db)):
+#     catalogue_data = crud.get_catalogue_by_user_id(db, user_id=user_id)
+#     if not catalogue_data:
+#         raise HTTPException(status_code=404, detail="Catalogue data not found")
+#     return {"catalogue": catalogue_data}
 
 @router.post("/process_image/")
 async def process_image_endpoint(
