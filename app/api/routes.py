@@ -1,7 +1,7 @@
 from fastapi import APIRouter, Depends, HTTPException, Query,File, UploadFile
 from sqlalchemy.orm import Session
-from app.api import schemas
-from app.api import auth, crud, deps, models
+# from app.api import schemas
+# from app.api import auth, crud, deps, models
 from app.api.utils import process_image, get_gemini_response
 from fastapi.responses import JSONResponse
 
