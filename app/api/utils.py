@@ -2,13 +2,13 @@ from fastapi import FastAPI, File, UploadFile, HTTPException
 from fastapi.responses import JSONResponse
 from PIL import Image
 from io import BytesIO
-from dotenv import load_dotenv
+# from dotenv import load_dotenv
 import os
 import google.generativeai as genai
 import json
 import re
 
-load_dotenv()
+# load_dotenv()
 genai.configure(api_key="AIzaSyDo3bbDydm0fN9V2es__wTP_QAD7nwDXO0")
 model = genai.GenerativeModel('gemini-pro-vision')
 
