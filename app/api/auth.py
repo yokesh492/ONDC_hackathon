@@ -10,17 +10,17 @@ from sqlalchemy.orm import Session
 
 router = APIRouter()
 
-pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
-oauth2_scheme = OAuth2PasswordBearer(tokenUrl="token")
+# pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
+# oauth2_scheme = OAuth2PasswordBearer(tokenUrl="token")
 
-def verify_password(plain_password, hashed_password):
-    return pwd_context.verify(plain_password, hashed_password)
+# def verify_password(plain_password, hashed_password):
+#     return pwd_context.verify(plain_password, hashed_password)
 
-def get_password_hash(password):
-    return pwd_context.hash(password)
+# def get_password_hash(password):
+#     return pwd_context.hash(password)
 
-def get_user(db, username: str):
-    return db.query(models.User).filter(models.User.username == username).first()
+# def get_user(db, username: str):
+#     return db.query(models.User).filter(models.User.username == username).first()
 
 # if we plan to add JWT authentication 
 # we can implement here .
