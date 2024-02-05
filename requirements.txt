@@ -4,4 +4,4 @@ google-generativeai
 bcrypt
 uvicorn
 pillow
-dotenv
+
