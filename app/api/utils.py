@@ -11,6 +11,7 @@ import re
 # load_dotenv()
 genai.configure(api_key="AIzaSyDo3bbDydm0fN9V2es__wTP_QAD7nwDXO0")
 model = genai.GenerativeModel('gemini-pro-vision')
+model2 = genai.GenerativeModel('gemini-pro')
 
 prompt = """
     you are an expert ecommerce seller who is about to digitalize the catalogue , 
@@ -65,5 +66,18 @@ def process_image(uploaded_file: UploadFile):
 
     #image = Image.open(BytesIO(uploaded_file.file.read()))
     return image_content
-
+def get_gemini_text(input_text):
+    prompt = f"""
+    you are an expert ecommerce seller who is about to digitalize the catalogue , 
+    from the given product summary 
+    {input_text}  extract the data such as name , description , category , price if mention ina above ,varients such as color ,size if it mention
+    and  if product summary does not contain enough information to extract the requested data fields. just give output no issue, domt give null else give empty string
+    give output in this json format.
+     """
+    response = model2.generate_content(prompt)
+    #print(response.text)
+    text = response.text.replace('json','')
+    #print(text)
+    text = eval(text.replace('`',''))
+    return text
 
