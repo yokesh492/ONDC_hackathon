@@ -52,3 +52,7 @@ async def process_image_endpoint(
         raise HTTPException(status_code=404, detail=str(e))
     
     
+@router.post("/text_catalog/")
+async def get_text_catalog(input: str):
+    response = get_gemini_text(input)
+    return JSONResponse(content=response)
