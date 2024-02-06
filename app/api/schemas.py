@@ -20,3 +20,6 @@ class CatalogueItem(BaseModel):
 
 class CatalogueResponse(BaseModel):
     catalogue: List[CatalogueItem]
+
+class InputData(BaseModel):
+    input: str
