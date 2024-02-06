@@ -2,7 +2,7 @@ from fastapi import APIRouter, Depends, HTTPException, Query,File, UploadFile
 from sqlalchemy.orm import Session
 # from app.api import schemas
 # from app.api import auth, crud, deps, models
-from app.api.utils import process_image, get_gemini_response
+from app.api.utils import process_image, get_gemini_response , get_gemini_text
 from fastapi.responses import JSONResponse
 import logging
 logger = logging.getLogger(__name__)
