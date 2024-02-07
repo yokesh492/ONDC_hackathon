@@ -7,3 +7,4 @@ pillow
 python-multipart
 psycopg2-binary
 google-cloud
+dotenv
