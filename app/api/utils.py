@@ -2,14 +2,14 @@ from fastapi import FastAPI, File, UploadFile, HTTPException
 from fastapi.responses import JSONResponse
 from PIL import Image
 from io import BytesIO
-from dotenv import load_dotenv
+# from dotenv import load_dotenv
 from google.cloud import storage
 import os
 import google.generativeai as genai
 import json
 import re
 
-load_dotenv()
+# load_dotenv()
 genai.configure(api_key="AIzaSyDo3bbDydm0fN9V2es__wTP_QAD7nwDXO0")
 os.environ['GOOGLE_APPLICATION_CREDENTIALS'] = r"secret_key\ONDC_GCP.json"
 client = storage.Client()
