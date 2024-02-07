@@ -15,8 +15,11 @@ class CatalogueItem(BaseModel):
     name: str
     description: str
     price: float
-    qty: int
+    top_categories: List[str]
+    variants: List[Variant]
+    #qty: int
     image: str
+    
 
 class CatalogueResponse(BaseModel):
     catalogue: List[CatalogueItem]
