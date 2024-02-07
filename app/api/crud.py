@@ -20,7 +20,9 @@ def create_catalog(db: Session, item : schemas.CatalogueItem,user_id : int):
         name = item.name,
         description = item.description,
         price = item.price,
-        qty = item.qty,
+        #qty = item.qty,
+        top_categories=item.top_categories,
+        variants=item.variants,
         image = item.image,
         user_id = user_id,
     )
