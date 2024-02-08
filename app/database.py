@@ -63,10 +63,10 @@ engine = connect_cloud_sql()
 
 # # Create the engine and metadata
 # engine = connect_cloud_sql()
-# metadata = sqlalchemy.MetaData()
+metadata = sqlalchemy.MetaData()
 
 # # Bind the sessionmaker to the engine
-# SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
+SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 
 
 
