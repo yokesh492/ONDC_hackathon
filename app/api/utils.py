@@ -11,7 +11,7 @@ import re
 
 # load_dotenv()
 genai.configure(api_key="AIzaSyDo3bbDydm0fN9V2es__wTP_QAD7nwDXO0")
-os.environ['GOOGLE_APPLICATION_CREDENTIALS']
+#os.environ['GOOGLE_APPLICATION_CREDENTIALS']
 client = storage.Client()
 bucket_name = 'ondc_hackathonimage'
 
