@@ -84,7 +84,7 @@ async def get_gemini_text(input_text):
      """
     response = model2.generate_content(prompt)
     print(response.text)
-    text = response.text.replace('json','')
+    text = response.text.replace('json','').replace('null','""')
     print(text)
     text = eval(text.replace('`',''))
     return text
