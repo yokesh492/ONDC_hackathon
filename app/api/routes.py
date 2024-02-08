@@ -54,7 +54,7 @@ async def process_image_endpoint(
     
 @router.post("/text_catalog/")
 async def get_text_catalog(input_data: schemas.InputData):
-    response = get_gemini_text(input_data.input)
+    response = await get_gemini_text(input_data.input)
     return JSONResponse(content=response)
 
 @router.post("/add_to_catalog/{user_id}")
