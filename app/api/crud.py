@@ -22,7 +22,6 @@ def create_product(db: Session, item: schemas.CatalogItemCreate,user_id: int) ->
     db_product = models.Product(
         name=item.name,
         description=item.description,
-        price=item.price,
         category=item.category,
         sub_categories=item.sub_categories,
         image=item.image,
