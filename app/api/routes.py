@@ -5,6 +5,7 @@ from app.api import auth, crud, deps, models
 from app.api.utils import process_image, get_gemini_response , get_gemini_text, upload_image_to_gcs
 from fastapi.responses import JSONResponse
 import json
+import ast
 import logging
 from typing import List
 logger = logging.getLogger(__name__)
@@ -87,7 +88,7 @@ def get_user_catalogue(user_id: int, db: Session = Depends(deps.get_db)):
                 "inv": catalog_item.inv,
                 "price": catalog_item.price,
                 "discount_price": catalog_item.discount_price,
-                "variants": catalog_item.variants  # Assuming this is already the correct format or has been converted
+                "variants": ast.literal_eval(catalog_item.variants)
                 }
             catalog_details = schemas.CatalogDetail(**catalog_details_data)
             catalogue_data.append(schemas.ProductCatalogResponse(product=product_details, catalog=catalog_details))
