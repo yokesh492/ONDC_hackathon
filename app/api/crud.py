@@ -18,7 +18,7 @@ def create_user(db: Session, user: schemas.UserCreate):
 
 # Inside crud.py or similar module
 
-def create_product(db: Session, item: schemas.CatalogItemCreate) -> models.Product:
+def create_product(db: Session, item: schemas.CatalogItemCreate,user_id: int) -> models.Product:
     db_product = models.Product(
         name=item.name,
         description=item.description,
@@ -26,7 +26,7 @@ def create_product(db: Session, item: schemas.CatalogItemCreate) -> models.Produ
         category=item.category,
         sub_categories=item.sub_categories,
         image=item.image,
-        user_id=item.user_id  # Assuming the user_id is part of the Product schema
+        user_id=user_id  # Assuming the user_id is part of the Product schema
     )
     db.add(db_product)
     db.commit()

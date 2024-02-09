@@ -57,7 +57,7 @@ async def get_text_catalog(input_data: schemas.InputData):
 def create_catalogue_item(user_id: int, item: schemas.ProductCatalogCreate, db: Session = Depends(deps.get_db)):
     if item.pid == 0:
         # Create a new Product
-        product = crud.create_product(db=db, item=item)
+        product = crud.create_product(db=db, item=item,user_id=user_id)
         item.pid = product.id
     # Now, create a catalog entry with the updated pid (either the new product's ID or the one provided)
     catalog_entry = crud.create_catalog(db=db, item=item, user_id=user_id)
