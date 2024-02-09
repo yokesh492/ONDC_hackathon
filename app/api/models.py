@@ -8,8 +8,7 @@ class User(Base):
     __tablename__ = "users"
     id = Column(Integer, primary_key=True)
     username = Column(String, unique=True, index=True)
-    password = Column(String)
-    catalogues = relationship("Catalog", back_populates="owner")  # Correct
+    password = Column(String)  # Correct
     products = relationship("Product", back_populates="owner")  # Add this line
 
 class Product(Base):
@@ -33,9 +32,7 @@ class Catalog(Base):
     discount_price = Column(Integer)
     variants = Column(JSON)
     pid = Column(Integer, ForeignKey("products.id"))
-    product = relationship("Product", back_populates="catalogs")  
-    user_id = Column(Integer, ForeignKey("users.id"))
-    owner = relationship("User", back_populates="catalogues") 
+    product = relationship("Product", back_populates="catalogs")
 
 
 
