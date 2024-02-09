@@ -14,39 +14,39 @@ class UserLogin(UserBase):
 class ProductBase(BaseModel):
     name: str
     description: str
-    price: float
     category: str
     sub_categories: List[str]
     image: str
 class ProductCreate(ProductBase):
     pass
+class Variant(BaseModel):
+    size: Optional[str] = None
+    flavour: Optional[str] = None
 
 class ProductCatalogCreate(BaseModel):
     # Product fields
     name: str
     description: str
-    price: float
     category: str
     sub_categories: List[str]
-    variants: List[str]
+    variants: List[Variant]
     image: str
 
     # Catalog fields
     sku_id: str
     inv: int
-    price: float
-    discount_price: Optional[float] = None
+    price: int
+    discount_price: Optional[int] = None
 
     # User and Product IDs
-    user_id: int
     pid: Optional[int] = 0
 
 class CatalogItemBase(BaseModel):
     sku_id: str
     inv: int
-    price: float
-    discount_price: float
-    variants: List[str]
+    price: int
+    discount_price: int
+    variants: List[Variant]
     pid: int
 
 class CatalogItemCreate(CatalogItemBase):
@@ -64,16 +64,15 @@ class InputData(BaseModel):
 class ProductDetail(BaseModel):
     name: str
     description: str
-    price: float
     category: str
     sub_categories: List[str]
     image: str
 
 class CatalogDetail(BaseModel):
     inv: int
-    price: float
-    discount_price: Optional[float] = None
-    variants: List[str]
+    price: int
+    discount_price: Optional[int] = None
+    variants: List[Variant]
 
 class ProductCatalogResponse(BaseModel):
     product: ProductDetail
