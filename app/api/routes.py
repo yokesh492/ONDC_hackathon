@@ -75,20 +75,17 @@ def get_user_catalogue(user_id: int, db: Session = Depends(deps.get_db)):
         product_details = schemas.ProductDetail(**product.__dict__)
 
         for catalog_item in catalog_items:
-            # Ensure variants is in the correct format
+            variants = catalog_item.variants
             if isinstance(catalog_item.variants, str):
                 # Deserialize if variants is a JSON string
                 variants = json.loads(catalog_item.variants)
-            else:
-                # Assume variants is already a Python object in the correct format
-                variants = catalog_item.variants
 
             # Create CatalogDetail instance
             catalog_details_data = {
                 "inv": catalog_item.inv,
                 "price": catalog_item.price,
                 "discount_price": catalog_item.discount_price,
-                "variants": ast.literal_eval(catalog_item.variants)
+                "variants": variants
                 }
             catalog_details = schemas.CatalogDetail(**catalog_details_data)
             catalogue_data.append(schemas.ProductCatalogResponse(product=product_details, catalog=catalog_details))
