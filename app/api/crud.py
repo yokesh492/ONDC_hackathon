@@ -15,18 +15,41 @@ def create_user(db: Session, user: schemas.UserCreate):
     db.commit()
     db.refresh(db_user)
     return db_user
-def create_catalog(db: Session, item : schemas.CatalogueItem,user_id : int):
-    db_item = models.Catalogue(
-        name = item.name,
-        description = item.description,
-        price = item.price,
-        #qty = item.qty,
-        top_categories=item.top_categories,
-        variants=item.variants,
-        image = item.image,
-        user_id = user_id,
+
+# Inside crud.py or similar module
+
+def create_product(db: Session, item: schemas.CatalogItemCreate) -> models.Product:
+    db_product = models.Product(
+        name=item.name,
+        description=item.description,
+        price=item.price,
+        category=item.category,
+        sub_categories=item.sub_categories,
+        image=item.image,
+        user_id=item.user_id  # Assuming the user_id is part of the Product schema
     )
-    db.add(db_item)
+    db.add(db_product)
     db.commit()
-    db.refresh(db_item)
-    return db_item
+    db.refresh(db_product)
+    return db_product
+
+def create_catalog(db: Session, item: schemas.CatalogItemCreate, user_id: int) -> models.Catalog:
+    db_catalog = models.Catalog(
+        sku_id=item.sku_id,
+        inv=item.inv,
+        pid=item.pid,
+        price=item.price,
+        discount_price=item.discount_price,
+        variants=item.variants,
+        user_id=user_id
+    )
+    db.add(db_catalog)
+    db.commit()
+    db.refresh(db_catalog)
+    return db_catalog
+
+def get_products_by_user_id(db: Session, user_id: int):
+    return db.query(models.Product).filter(models.Product.user_id == user_id).all()
+
+def get_catalog_by_product_id(db: Session, product_id: int):
+    return db.query(models.Catalog).filter(models.Catalog.pid == product_id).all()
