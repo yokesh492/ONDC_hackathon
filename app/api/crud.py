@@ -1,5 +1,6 @@
 from sqlalchemy.orm import Session
 from app.api import models,schemas,auth
+import json
 
 
 def get_catalogue_by_user_id(db: Session, user_id: int):
@@ -33,13 +34,15 @@ def create_product(db: Session, item: schemas.CatalogItemCreate,user_id: int) ->
     return db_product
 
 def create_catalog(db: Session, item: schemas.CatalogItemCreate, user_id: int) -> models.Catalog:
+    variants_dicts = [variant.dict() for variant in item.variants]
+    variants_json = json.dumps(variants_dicts)
     db_catalog = models.Catalog(
         sku_id=item.sku_id,
         inv=item.inv,
         pid=item.pid,
         price=item.price,
         discount_price=item.discount_price,
-        variants=item.variants,
+        variants=variants_json,
     )
     db.add(db_catalog)
     db.commit()
