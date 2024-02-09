@@ -103,7 +103,7 @@ def get_user_catalogue(user_id: int, db: Session = Depends(deps.get_db)):
         )
         catalogue_data.append(product_catalog_response)
 
-        return catalogue_data
+    return catalogue_data
 
 
 
