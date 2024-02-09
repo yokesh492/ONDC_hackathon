@@ -73,24 +73,37 @@ def get_user_catalogue(user_id: int, db: Session = Depends(deps.get_db)):
     for product in products:
         catalog_items = crud.get_catalog_by_product_id(db, product_id=product.id)
         product_details = schemas.ProductDetail(**product.__dict__)
-
+        
+        catalog_details_list = []  # Prepare a list to hold CatalogDetail instances or dictionaries
         for catalog_item in catalog_items:
+            # Ensure variants is in the correct format
             variants = catalog_item.variants
-            if isinstance(catalog_item.variants, str):
+            print(variants)
+            if isinstance(variants, str):
                 # Deserialize if variants is a JSON string
-                variants = json.loads(catalog_item.variants)
-
-            # Create CatalogDetail instance
+                variants = json.loads(variants)
+                print(variants)
+            # Create a dictionary for CatalogDetail instantiation
             catalog_details_data = {
                 "inv": catalog_item.inv,
                 "price": catalog_item.price,
                 "discount_price": catalog_item.discount_price,
                 "variants": variants
-                }
+            }
+            print(catalog_details_data)
+            
+            # Instantiate CatalogDetail or directly append the dictionary if Pydantic can handle it
             catalog_details = schemas.CatalogDetail(**catalog_details_data)
-            catalogue_data.append(schemas.ProductCatalogResponse(product=product_details, catalog=catalog_details))
+            catalog_details_list.append(catalog_details)
 
-    return catalogue_data
+        # Instantiate ProductCatalogResponse with the list of CatalogDetail instances/dictionaries
+        product_catalog_response = schemas.ProductCatalogResponse(
+            product=product_details,
+            catalog=catalog_details_list  # Make sure this matches the expected field name in ProductCatalogResponse
+        )
+        catalogue_data.append(product_catalog_response)
+
+        return catalogue_data
 
 
 
