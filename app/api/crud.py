@@ -40,7 +40,6 @@ def create_catalog(db: Session, item: schemas.CatalogItemCreate, user_id: int) -
         price=item.price,
         discount_price=item.discount_price,
         variants=item.variants,
-        user_id=user_id
     )
     db.add(db_catalog)
     db.commit()
