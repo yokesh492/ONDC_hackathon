@@ -87,8 +87,9 @@ def get_user_catalogue(user_id: int, db: Session = Depends(deps.get_db)):
                 inv=catalog_item.inv,
                 price=catalog_item.price,
                 discount_price=catalog_item.discount_price,
-                variants=variants  # Pass the correctly formatted variants
+                variants=variants  # assuming 'variants' is already in the correct format
             )
+            catalog_details = schemas.CatalogDetail(**catalog_item)
             catalogue_data.append(schemas.ProductCatalogResponse(product=product_details, catalog=catalog_details))
 
     return catalogue_data
