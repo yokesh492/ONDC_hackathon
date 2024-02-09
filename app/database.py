@@ -67,7 +67,7 @@ def connect_cloud_sql() -> sqlalchemy.engine.base.Engine:
 
 #connecting railywway postgres 
 DATABASE_URL = os.getenv("DB_URL") 
-engine = create_engine(DATABASE_URL)
+engine = sqlalchemy.create_engine(DATABASE_URL)
 metadata = sqlalchemy.MetaData()
 
 # # Bind the sessionmaker to the engine
