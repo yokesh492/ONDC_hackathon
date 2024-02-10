@@ -54,3 +54,11 @@ def get_products_by_user_id(db: Session, user_id: int):
 
 def get_catalog_by_product_id(db: Session, product_id: int):
     return db.query(models.Catalog).filter(models.Catalog.pid == product_id).all()
+# In crud.py
+
+def get_catalog_by_id(db: Session, catalog_id: int):
+    return db.query(models.Catalog).filter(models.Catalog.id == catalog_id).first()
+
+def get_product_by_id(db: Session, product_id: int):
+    return db.query(models.Product).filter(models.Product.id == product_id).first()
+

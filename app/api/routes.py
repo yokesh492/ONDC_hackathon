@@ -105,6 +105,35 @@ def get_user_catalogue(user_id: int, db: Session = Depends(deps.get_db)):
     
     return catalogue_data
 
+@router.get("/products/{product_id}", response_model=schemas.ProductDetail)
+def get_product_detail(product_id: int, db: Session = Depends(deps.get_db)):
+    product = db.query(models.Product).filter(models.Product.id == product_id).first()
+    if product is None:
+        raise HTTPException(status_code=404, detail="Product not found")
+    return product
+
+
+@router.get("/catalog-detail/{catalog_id}", response_model=schemas.ProductCatalogDetail)
+def get_product_catalog_detail(catalog_id: int, db: Session = Depends(deps.get_db)):
+    catalog = crud.get_catalog_by_id(db, catalog_id=catalog_id)
+    if not catalog:
+        raise HTTPException(status_code=404, detail="Catalog not found")
+    product = crud.get_product_by_id(db, product_id=catalog.pid)
+    if not product:
+        raise HTTPException(status_code=404, detail="Product not found associated with the catalog")
+    variants = catalog.variants
+    if isinstance(variants, str):
+        variants = json.loads(variants)
+    variants = convert_variants_format(variants)
+    catalog_details_data = {
+        "catalogid" : catalog.id,
+        "inv": catalog.inv,
+        "price": catalog.price,
+        "discount_price": catalog.discount_price,
+        "variants": variants
+    }
+
+    return {"catalog": catalog_details_data, "product": product}
 
 
 # @router.get("/catalogue/{user_id}", response_model=List[schemas.ProductCatalogResponse])

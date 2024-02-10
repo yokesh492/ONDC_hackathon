@@ -79,3 +79,7 @@ class CatalogDetail(BaseModel):
 class ProductCatalogResponse(BaseModel):
     product: ProductDetail
     catalog: List[CatalogDetail] 
+
+class ProductCatalogDetail(BaseModel):
+    product: ProductDetail
+    catalog: CatalogDetail
