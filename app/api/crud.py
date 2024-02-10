@@ -62,6 +62,6 @@ def get_catalog_by_id(db: Session, catalog_id: int):
 def get_product_by_id(db: Session, product_id: int):
     return db.query(models.Product).filter(models.Product.id == product_id).first()
 
-def delete_product_and_catalogs(db: Session, product_id: int) -> Any:
-    db.query(models.Catalog).filter(models.Catalog.pid == product_id).delete()
+def delete_product_and_catalogs(db: Session, catalog_id: int) -> Any:
+    db.query(models.Catalog).filter(models.Catalog.id == catalog_id).delete()
     db.commit()

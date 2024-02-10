@@ -141,13 +141,9 @@ def create_catalogue_item(user_id: int, item: schemas.ProductCatalogCreate, db: 
     catalog_entry = crud.create_catalog(db=db, item=item, user_id=user_id)
     return catalog_entry
 
-@router.delete("/product/{product_id}", response_model=None)
+@router.delete("/product/{catalog_id}", response_model=None)
 def delete_product(product_id: int, db: Session = Depends(deps.get_db)):
-    product = db.query(models.Product).filter(models.Product.id == product_id).first()
-    if not product:
-        return JSONResponse(status_code=200, content={"message": "No products found "})
-    crud.delete_product_and_catalogs(db, product_id=product_id)
-
+    crud.delete_product_and_catalogs(db, catalog_id=catalog_id)
     return {"detail": "Product and related catalog entries deleted successfully"}
 
 
