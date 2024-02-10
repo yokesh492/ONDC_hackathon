@@ -113,7 +113,7 @@ def get_product_detail(product_id: int, db: Session = Depends(deps.get_db)):
     return product
 
 
-@router.get("/catalog-detail/{catalog_id}", response_model=schemas.ProductCatalogDetail)
+@router.get("/catalog_detail/{catalog_id}", response_model=schemas.ProductCatalogDetail)
 def get_product_catalog_detail(catalog_id: int, db: Session = Depends(deps.get_db)):
     catalog = crud.get_catalog_by_id(db, catalog_id=catalog_id)
     if not catalog:
@@ -135,6 +135,10 @@ def get_product_catalog_detail(catalog_id: int, db: Session = Depends(deps.get_d
 
     return {"catalog": catalog_details_data, "product": product}
 
+@router.post("/create_catalog/{user_id}")
+def create_catalogue_item(user_id: int, item: schemas.ProductCatalogCreate, db: Session = Depends(deps.get_db)):
+    catalog_entry = crud.create_catalog(db=db, item=item, user_id=user_id)
+    return catalog_entry
 
 # @router.get("/catalogue/{user_id}", response_model=List[schemas.ProductCatalogResponse])
 # def get_user_catalogue(user_id: int, db: Session = Depends(deps.get_db)):
