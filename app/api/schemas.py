@@ -1,5 +1,5 @@
 from pydantic import BaseModel
-from typing import List, Optional
+from typing import List, Optional, Dict, Any
 
 
 class UserBase(BaseModel):
@@ -72,7 +72,7 @@ class CatalogDetail(BaseModel):
     inv: int
     price: int
     discount_price: Optional[int] = None
-    variants: List[Variant]
+    variants: List[Dict[str, Any]]
 
 class ProductCatalogResponse(BaseModel):
     product: ProductDetail
