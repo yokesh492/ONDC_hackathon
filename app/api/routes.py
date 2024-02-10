@@ -2,7 +2,7 @@ from fastapi import APIRouter, Depends, HTTPException, Query,File, UploadFile
 from sqlalchemy.orm import Session
 from app.api import schemas
 from app.api import auth, crud, deps, models
-from app.api.utils import process_image, get_gemini_response , get_gemini_text, upload_image_to_gcs
+from app.api.utils import process_image, get_gemini_response , get_gemini_text, upload_image_to_gcs, convert_variants_format
 from fastapi.responses import JSONResponse
 import json
 import ast
@@ -78,17 +78,19 @@ def get_user_catalogue(user_id: int, db: Session = Depends(deps.get_db)):
         for catalog_item in catalog_items:
             # Ensure variants is in the correct format
             variants = catalog_item.variants
+            print(variants)
             if isinstance(variants, str):
                 # Deserialize if variants is a JSON string
                 variants = json.loads(variants)
             # Create a dictionary for CatalogDetail instantiation
+            variants = convert_variants_format(variants)
             catalog_details_data = {
                 "inv": catalog_item.inv,
                 "price": catalog_item.price,
                 "discount_price": catalog_item.discount_price,
                 "variants": variants
             }
-            
+            print(variants)
             # Instantiate CatalogDetail or directly append the dictionary if Pydantic can handle it
             catalog_details = schemas.CatalogDetail(**catalog_details_data)
             catalog_details_list.append(catalog_details)
