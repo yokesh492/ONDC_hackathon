@@ -62,7 +62,7 @@ class InputData(BaseModel):
     input: str
 
 class ProductDetail(BaseModel):
-    productid : int
+    id : int
     name: str
     description: str
     category: str
