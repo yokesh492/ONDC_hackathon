@@ -78,11 +78,9 @@ def get_user_catalogue(user_id: int, db: Session = Depends(deps.get_db)):
         for catalog_item in catalog_items:
             # Ensure variants is in the correct format
             variants = catalog_item.variants
-            print(variants)
             if isinstance(variants, str):
                 # Deserialize if variants is a JSON string
                 variants = json.loads(variants)
-                print(variants)
             # Create a dictionary for CatalogDetail instantiation
             catalog_details_data = {
                 "inv": catalog_item.inv,
@@ -90,7 +88,6 @@ def get_user_catalogue(user_id: int, db: Session = Depends(deps.get_db)):
                 "discount_price": catalog_item.discount_price,
                 "variants": variants
             }
-            print(catalog_details_data)
             
             # Instantiate CatalogDetail or directly append the dictionary if Pydantic can handle it
             catalog_details = schemas.CatalogDetail(**catalog_details_data)
@@ -102,6 +99,7 @@ def get_user_catalogue(user_id: int, db: Session = Depends(deps.get_db)):
             catalog=catalog_details_list  # Make sure this matches the expected field name in ProductCatalogResponse
         )
         catalogue_data.append(product_catalog_response)
+        print(catalogue_data)
 
     return catalogue_data
 
