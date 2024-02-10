@@ -66,6 +66,7 @@ def create_catalogue_item(user_id: int, item: schemas.ProductCatalogCreate, db: 
 @router.get("/catalogue/{user_id}", response_model=List[schemas.ProductCatalogResponse])
 def get_user_catalogue(user_id: int, db: Session = Depends(deps.get_db)):
     products = crud.get_products_by_user_id(db, user_id=user_id)
+    print(products)
     if not products:
         return JSONResponse(status_code=200, content={"message": "No products found for the user. Please add a catalog."})
     
