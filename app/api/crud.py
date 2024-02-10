@@ -1,7 +1,7 @@
 from sqlalchemy.orm import Session
 from app.api import models,schemas,auth
 import json
-
+from typing import Any
 
 def get_catalogue_by_user_id(db: Session, user_id: int):
     return db.query(models.Catalogue).filter(models.Catalogue.user_id == user_id).all()
@@ -62,3 +62,7 @@ def get_catalog_by_id(db: Session, catalog_id: int):
 def get_product_by_id(db: Session, product_id: int):
     return db.query(models.Product).filter(models.Product.id == product_id).first()
 
+def delete_product_and_catalogs(db: Session, product_id: int) -> Any:
+    db.query(models.Catalog).filter(models.Catalog.product_id == product_id).delete()
+    db.query(models.Product).filter(models.Product.id == product_id).delete()
+    db.commit()
