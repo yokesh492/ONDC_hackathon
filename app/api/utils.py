@@ -35,7 +35,7 @@ prompt = """
         - Beauty & Hygiene,
         - Cleaning & Household
     ], 
-    "sub-category": [
+    "sub_category": [
         Select top 3 from the following options -
 - Fresh Vegetables,
 - Herbs & Seasonings,
@@ -150,7 +150,7 @@ async def get_gemini_text(input_text):
         - Beauty & Hygiene,
         - Cleaning & Household
     ],
-    "sub-category": [
+    "sub_category": [
         Select top 3 from the following options -
 - Fresh Vegetables,
 - Herbs & Seasonings,
@@ -207,8 +207,8 @@ async def get_gemini_text(input_text):
 - Pooja Needs,
 - Stationery],
 "variants": [
-        size: Mention the size of the product if mentioned in the image, otherwise leave empty and use the apt unit measurements based the product.,
-        flavours: Mention the size of the product if mentioned in the image, otherwise leave empty and use apt std flavour.
+        size: Mention the size of the product if mentioned in the text, otherwise leave empty and use the apt unit measurements based the product.,
+        flavours: Mention the size of the product if mentioned in the text, otherwise leave empty and use apt std flavour.
     ] for variants give array inside dictionaries.
     "sku": Generate a unique SKU ID for each product using the following format - First two char of the product name + First two char of the category name + First two char of the sub category name  + 5 Growing number combination,
 

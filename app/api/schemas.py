@@ -62,17 +62,19 @@ class InputData(BaseModel):
     input: str
 
 class ProductDetail(BaseModel):
+    productid : int
     name: str
     description: str
     category: str
     sub_categories: List[str]
     image: str
-
+   
 class CatalogDetail(BaseModel):
+    catalogid : int
     inv: int
     price: int
     discount_price: Optional[int] = None
-    variants: List[Dict[str, Any]]
+    variants: List[Dict[str, Any]]  
 
 class ProductCatalogResponse(BaseModel):
     product: ProductDetail

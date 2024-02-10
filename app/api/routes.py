@@ -85,6 +85,7 @@ def get_user_catalogue(user_id: int, db: Session = Depends(deps.get_db)):
             # Create a dictionary for CatalogDetail instantiation
             variants = convert_variants_format(variants)
             catalog_details_data = {
+                "catalogid" : catalog_item.id,
                 "inv": catalog_item.inv,
                 "price": catalog_item.price,
                 "discount_price": catalog_item.discount_price,
@@ -101,8 +102,7 @@ def get_user_catalogue(user_id: int, db: Session = Depends(deps.get_db)):
             catalog=catalog_details_list  # Make sure this matches the expected field name in ProductCatalogResponse
         )
         catalogue_data.append(product_catalog_response)
-        print(catalogue_data)
-
+    
     return catalogue_data
 
 
