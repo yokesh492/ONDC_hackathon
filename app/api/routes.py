@@ -142,7 +142,7 @@ def create_catalogue_item(user_id: int, item: schemas.ProductCatalogCreate, db: 
     return catalog_entry
 
 @router.delete("/product/{catalog_id}", response_model=None)
-def delete_product(product_id: int, db: Session = Depends(deps.get_db)):
+def delete_product(catalog_id: int, db: Session = Depends(deps.get_db)):
     crud.delete_product_and_catalogs(db, catalog_id=catalog_id)
     return {"detail": "Product and related catalog entries deleted successfully"}
 
