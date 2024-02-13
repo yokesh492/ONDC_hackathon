@@ -69,7 +69,7 @@ def delete_product_and_catalogs(db: Session, catalog_id: int) -> Any:
     product_id = catalog.product_id    
     db.delete(catalog)
     db.commit()   
-    other_catalogs = db.query(models.Catalog).filter(models.Catalog.product_id == product_id).all()
+    other_catalogs = db.query(models.Catalog).filter(models.Catalog.pid == product_id).all()
     if not other_catalogs:
         db.query(models.Product).filter(models.Product.id == product_id).delete()
         db.commit()     
