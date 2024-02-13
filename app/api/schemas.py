@@ -16,12 +16,8 @@ class ProductBase(BaseModel):
     description: str
     category: str
     sub_categories: List[str]
-    image: str
 class ProductCreate(ProductBase):
     pass
-class Variant(BaseModel):
-    size: Optional[str] = None
-    flavour: Optional[str] = None
 
 class ProductCatalogCreate(BaseModel):
     # Product fields
@@ -29,15 +25,15 @@ class ProductCatalogCreate(BaseModel):
     description: str
     category: str
     sub_categories: List[str]
-    variants: List[Variant]
-    image: str
+    
 
     # Catalog fields
     sku_id: str
     inv: int
     price: int
     discount_price: Optional[int] = None
-
+    image: str
+    variants: List[Dict[str, Any]]
     # User and Product IDs
     pid: Optional[int] = 0
 
@@ -46,17 +42,15 @@ class CatalogItemBase(BaseModel):
     inv: int
     price: int
     discount_price: int
-    variants: List[Variant]
+    variants: List[Dict[str, Any]]
     pid: int
+    image: str
 
 class CatalogItemCreate(CatalogItemBase):
     pass
     
 class CatalogItemResponse(CatalogItemBase):
     id: int
-
-# class CatalogueResponse(BaseModel):
-#     catalogue: List[CatalogueItem]
 
 class InputData(BaseModel):
     input: str
@@ -67,7 +61,6 @@ class ProductDetail(BaseModel):
     description: str
     category: str
     sub_categories: List[str]
-    image: str
    
 class CatalogDetail(BaseModel):
     catalogid : int
@@ -75,7 +68,7 @@ class CatalogDetail(BaseModel):
     price: int
     discount_price: Optional[int] = None
     variants: List[Dict[str, Any]]  
-
+    image: str
 class ProductCatalogResponse(BaseModel):
     product: ProductDetail
     catalog: List[CatalogDetail] 

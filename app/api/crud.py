@@ -25,7 +25,6 @@ def create_product(db: Session, item: schemas.CatalogItemCreate,user_id: int) ->
         description=item.description,
         category=item.category,
         sub_categories=item.sub_categories,
-        image=item.image,
         user_id=user_id  # Assuming the user_id is part of the Product schema
     )
     db.add(db_product)
@@ -43,6 +42,7 @@ def create_catalog(db: Session, item: schemas.CatalogItemCreate, user_id: int) -
         price=item.price,
         discount_price=item.discount_price,
         variants=variants_json,
+        image=item.image,
     )
     db.add(db_catalog)
     db.commit()

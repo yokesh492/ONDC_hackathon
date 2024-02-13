@@ -75,43 +75,39 @@ def get_user_catalogue(user_id: int, db: Session = Depends(deps.get_db)):
         catalog_items = crud.get_catalog_by_product_id(db, product_id=product.id)
         product_details = schemas.ProductDetail(**product.__dict__)
         
-        catalog_details_list = []  # Prepare a list to hold CatalogDetail instances or dictionaries
+        catalog_details_list = [] 
         for catalog_item in catalog_items:
-            # Ensure variants is in the correct format
             variants = catalog_item.variants
             print(variants)
             if isinstance(variants, str):
-                # Deserialize if variants is a JSON string
                 variants = json.loads(variants)
-            # Create a dictionary for CatalogDetail instantiation
             variants = convert_variants_format(variants)
             catalog_details_data = {
                 "catalogid" : catalog_item.id,
                 "inv": catalog_item.inv,
                 "price": catalog_item.price,
                 "discount_price": catalog_item.discount_price,
-                "variants": variants
+                "variants": variants,
+                "image": catalog_item.image,
             }
             print(variants)
-            # Instantiate CatalogDetail or directly append the dictionary if Pydantic can handle it
             catalog_details = schemas.CatalogDetail(**catalog_details_data)
             catalog_details_list.append(catalog_details)
 
-        # Instantiate ProductCatalogResponse with the list of CatalogDetail instances/dictionaries
         product_catalog_response = schemas.ProductCatalogResponse(
             product=product_details,
-            catalog=catalog_details_list  # Make sure this matches the expected field name in ProductCatalogResponse
+            catalog=catalog_details_list 
         )
         catalogue_data.append(product_catalog_response)
     
     return catalogue_data
 
-@router.get("/products/{product_id}", response_model=schemas.ProductDetail)
-def get_product_detail(product_id: int, db: Session = Depends(deps.get_db)):
-    product = db.query(models.Product).filter(models.Product.id == product_id).first()
-    if product is None:
-        raise HTTPException(status_code=404, detail="Product not found")
-    return product
+# @router.get("/products/{product_id}", response_model=schemas.ProductDetail)
+# def get_product_detail(product_id: int, db: Session = Depends(deps.get_db)):
+#     product = db.query(models.Product).filter(models.Product.id == product_id).first()
+#     if product is None:
+#         raise HTTPException(status_code=404, detail="Product not found")
+#     return product
 
 
 @router.get("/catalog_detail/{catalog_id}", response_model=schemas.ProductCatalogDetail)
@@ -131,9 +127,9 @@ def get_product_catalog_detail(catalog_id: int, db: Session = Depends(deps.get_d
         "inv": catalog.inv,
         "price": catalog.price,
         "discount_price": catalog.discount_price,
-        "variants": variants
+        "variants": variants,
+        "image" : catalog.image
     }
-
     return {"catalog": catalog_details_data, "product": product}
 
 @router.post("/create_catalog/{user_id}")
@@ -146,21 +142,3 @@ def delete_product(catalog_id: int, db: Session = Depends(deps.get_db)):
     crud.delete_product_and_catalogs(db, catalog_id=catalog_id)
     return {"detail": "Product and related catalog entries deleted successfully"}
 
-
-
-# @router.get("/catalogue/{user_id}", response_model=List[schemas.ProductCatalogResponse])
-# def get_user_catalogue(user_id: int, db: Session = Depends(deps.get_db)):
-#     products = crud.get_products_by_user_id(db, user_id=user_id)
-#     if not products:
-#         raise HTTPException(status_code=404, detail="No products found for the user")
-    
-#     catalogue_data = []
-#     for product in products:
-#         catalog_items = crud.get_catalog_by_product_id(db, product_id=product.id)
-#         product_details = schemas.ProductDetail(**product.__dict__)
-#         catalog_details_list = [schemas.CatalogDetail(**catalog_item.__dict__) for catalog_item in catalog_items]
-        
-#         for catalog_details in catalog_details_list:
-#             catalogue_data.append(schemas.ProductCatalogResponse(product=product_details, catalog=catalog_details))
-
-#     return catalogue_data
