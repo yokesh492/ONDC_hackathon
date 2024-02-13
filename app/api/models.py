@@ -14,8 +14,8 @@ class User(Base):
 class Product(Base):
     __tablename__ = "products"
     id = Column(Integer, primary_key=True)
-    name = Column(String)
-    description = Column(String)
+    name = Column(JSON)
+    description = Column(JSON)
     category = Column(String)
     sub_categories = Column(JSON)
     user_id = Column(Integer, ForeignKey("users.id"))

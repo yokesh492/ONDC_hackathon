@@ -12,8 +12,8 @@ class UserLogin(UserBase):
     password : str
 
 class ProductBase(BaseModel):
-    name: str
-    description: str
+    name: List[str]
+    description: List[str]
     category: str
     sub_categories: List[str]
 class ProductCreate(ProductBase):
@@ -21,8 +21,8 @@ class ProductCreate(ProductBase):
 
 class ProductCatalogCreate(BaseModel):
     # Product fields
-    name: str
-    description: str
+    name: List[str]
+    description: List[str]
     category: str
     sub_categories: List[str]
     
@@ -57,8 +57,8 @@ class InputData(BaseModel):
 
 class ProductDetail(BaseModel):
     id : int
-    name: str
-    description: str
+    name: List[str]
+    description: List[str]
     category: str
     sub_categories: List[str]
    
