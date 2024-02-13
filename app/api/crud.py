@@ -63,5 +63,14 @@ def get_product_by_id(db: Session, product_id: int):
     return db.query(models.Product).filter(models.Product.id == product_id).first()
 
 def delete_product_and_catalogs(db: Session, catalog_id: int) -> Any:
-    db.query(models.Catalog).filter(models.Catalog.id == catalog_id).delete()
-    db.commit()
+    catalog = db.query(models.Catalog).filter(models.Catalog.id == catalog_id).first()   
+    if catalog is None:
+        return {"message": "Catalog not found"} 
+    product_id = catalog.product_id    
+    db.delete(catalog)
+    db.commit()   
+    other_catalogs = db.query(models.Catalog).filter(models.Catalog.product_id == product_id).all()
+    if not other_catalogs:
+        db.query(models.Product).filter(models.Product.id == product_id).delete()
+        db.commit()     
+    return {"message": "Catalog and, if applicable, product deleted successfully"}
