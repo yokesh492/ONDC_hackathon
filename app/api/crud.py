@@ -33,8 +33,8 @@ def create_product(db: Session, item: schemas.CatalogItemCreate,user_id: int) ->
     return db_product
 
 def create_catalog(db: Session, item: schemas.CatalogItemCreate, user_id: int) -> models.Catalog:
-    variants_dicts = [variant.dict() for variant in item.variants]
-    variants_json = json.dumps(variants_dicts)
+    #variants_dicts = [variant.dict() for variant in item.variants]
+    #variants_json = json.dumps(variants_dicts)
     db_catalog = models.Catalog(
         sku_id=item.sku_id,
         inv=item.inv,
