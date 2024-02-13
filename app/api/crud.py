@@ -66,7 +66,7 @@ def delete_product_and_catalogs(db: Session, catalog_id: int) -> Any:
     catalog = db.query(models.Catalog).filter(models.Catalog.id == catalog_id).first()   
     if catalog is None:
         return {"message": "Catalog not found"} 
-    product_id = catalog.product_id    
+    product_id = catalog.pid    
     db.delete(catalog)
     db.commit()   
     other_catalogs = db.query(models.Catalog).filter(models.Catalog.pid == product_id).all()
