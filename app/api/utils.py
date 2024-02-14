@@ -15,8 +15,9 @@ os.environ['GOOGLE_APPLICATION_CREDENTIALS'] = "/app/app/ONDC_GCP.json"
 client = storage.Client()
 bucket_name = 'ondc_hackathonimage'
 
+generation_config = {"temperature": 0.4,"topP": 1.0,"topK": 32,"maxOutputTokens": 2048}
 
-model = genai.GenerativeModel('gemini-pro-vision')
+model = genai.GenerativeModel('gemini-pro-vision',generation_config = generation_config)
 model2 = genai.GenerativeModel('gemini-pro')
 prompt = """
     You are an e-commerce platform looking to digitize your product catalog. Your task is to extract relevant data from the given image of grocery items. Your output should be structured as follows:
