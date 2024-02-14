@@ -9,6 +9,14 @@ import google.generativeai as genai
 import json
 import re
 
+
+
+# for candidate in response.candidates:
+#             return [part.text for part in candidate.content.parts]
+
+
+
+
 # load_dotenv()
 genai.configure(api_key="AIzaSyAHQgKDHnhKHV9mx8I_zhl93OfpPLPiirE")
 os.environ['GOOGLE_APPLICATION_CREDENTIALS'] = "/app/app/ONDC_GCP.json"
@@ -24,7 +32,7 @@ prompt = """
 
 {     
     "name": [Name of the product in langauge english,tamil,hindi],
-    "description": [Description of the product, highlighting its features and qualities. Ensure it reflects the Indian context - less than 40 words,in langauge english,tamil,hindi]
+    "description": [Description of the product, highlighting its features and qualities. Ensure it reflects the Indian context - less than 30 words,in langauge english,tamil,hindi]
     "price": Price of the product if mentioned in the image, otherwise leave empty,
     "category": [
         Select only 1 category from the following options:,
@@ -108,19 +116,22 @@ def convert_variants_format(original_variants):
 
 
 async def get_gemini_response(image_data):
-    response = model.generate_content([ image_data[0], prompt])
-    #response = json.dump(response.text)
-    # print(eval(response.text.replace('json','')))
-    print(response.text)
-    text = response.text.replace('json','')
-    print(text)
-    text = eval(text.replace('`',''))
-    # print(text)
-    text = {
-        **text,
-        "variants" : convert_variants_format(text["variants"])
-    }
-    return text
+    try:
+        response = model.generate_content([ image_data[0], prompt])
+        #response = json.dump(response.text)
+        # print(eval(response.text.replace('json','')))
+        print(response.text)
+        text = response.text.replace('json','')
+        print(text)
+        text = eval(text.replace('`',''))
+        # print(text)
+        text = {
+            **text,
+            "variants" : convert_variants_format(text["variants"])
+        }
+        return text
+    except: 
+        return ("please provide another image file")
 
 def process_image(uploaded_file: UploadFile):
     if uploaded_file.content_type not in ["image/jpeg", "image/png"]:
