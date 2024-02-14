@@ -15,7 +15,7 @@ os.environ['GOOGLE_APPLICATION_CREDENTIALS'] = "/app/app/ONDC_GCP.json"
 client = storage.Client()
 bucket_name = 'ondc_hackathonimage'
 
-generation_config = {"maxOutputTokens": 2048}
+generation_config = {"max_output_tokens": 2048}
 
 model = genai.GenerativeModel('gemini-pro-vision',generation_config = generation_config)
 model2 = genai.GenerativeModel('gemini-pro')
