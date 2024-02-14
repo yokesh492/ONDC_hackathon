@@ -232,6 +232,10 @@ async def get_gemini_text(input_text):
     text = response.text.replace('json','').replace('null','""')
     print(text)
     text = eval(text.replace('`',''))
+    text = {
+            **text,
+            "variants" : convert_variants_format(text["variants"])
+        }
     return text
 
 async def upload_image_to_gcs(uploaded_file: UploadFile):
