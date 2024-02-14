@@ -16,7 +16,7 @@ router = APIRouter()
 async def register(user: schemas.UserCreate, db: Session = Depends(deps.get_db)):
     db_user = crud.get_user(db, username=user.username)
     if db_user:
-        raise HTTPException(status_code=400, detail="Username already registered")
+        return {"message":"Username already registered"}
     return crud.create_user(db=db, user=user)
 
 
@@ -24,7 +24,7 @@ async def register(user: schemas.UserCreate, db: Session = Depends(deps.get_db))
 async def login(user: schemas.UserCreate, db: Session = Depends(deps.get_db)):
     db_user = db.query(models.User).filter(models.User.username == user.username).first()
     if not db_user or not auth.verify_password(user.password, db_user.password):
-        raise HTTPException(status_code=401, detail="Incorrect username or password")
+        return {"message":"Incorrect username or password"}
     return {"user_id": db_user.id, "message": "Login successful"}
 
 
