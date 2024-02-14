@@ -149,8 +149,8 @@ def process_image(uploaded_file: UploadFile):
 async def get_gemini_text(input_text):
     promptt = f"""
     You are an expert enabling ecommerce sellers by making it easier to digitize the catalog, from the given product details {input_text} extract the data such as product name and generate the product description based on the name extracted, select one apt category, select top 3 sub-category which will be apt and price only if mentioned, variants such as color and size only if it is mentioned and if product details does not contain enough information to extract the requested data fields. just give output no issue, don't give null else give empty string.
-    name: [name of the product from the text in langauge english,tamil,hindi ],
-    description :  ["Generated Product Description Based on the Product Name  highlighting its features and qualities. Ensure it reflects the Indian context - less than 40 words,in langauge english,tamil,hindi"],
+    name: [name of the product from the text in array in langauge english,tamil,hindi ],
+    description :  ["Generated Product Description Based on the Product Name  highlighting its features and qualities. Ensure it reflects the Indian context - less than 40 words ,in array,in langauge english,tamil,hindi"],
     "price": Price of the product if mentioned in the text, otherwise leave empty,
     "category": [
         Select only 1 category from the following options:,
