@@ -32,7 +32,7 @@ prompt = """
 
 {     
     "name": [Name of the product in langauge english,tamil,hindi],
-    "description": [Description of the product, highlighting its features and qualities. Ensure it reflects the Indian context - less than 30 words,in langauge english,tamil,hindi]
+    "description": [Description of the product, highlighting its features and qualities. Ensure it reflects the Indian context ,in langauge english,tamil,hindi]
     "price": Price of the product if mentioned in the image, otherwise leave empty,
     "category": [
         Select only 1 category from the following options:,
