@@ -31,8 +31,8 @@ prompt = """
     You are an e-commerce platform looking to digitize your product catalog. Your task is to extract relevant data from the given image of grocery items. Your output should be structured as follows:
 
 {     
-    "name": [Name of the product in langauge english,tamil,hindi],
-    "description": [Description of the product, highlighting its features and qualities. Ensure it reflects the Indian context ,in langauge english,tamil,hindi]
+    "name": [Name of the product in langauge english,hindi],
+    "description": [Description of the product, highlighting its features and qualities. Ensure it reflects the Indian context ,in langauge english,hindi]
     "price": Price of the product if mentioned in the image, otherwise leave empty,
     "category": [
         Select only 1 category from the following options:,
