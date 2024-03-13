@@ -13,13 +13,19 @@ import re
 
 # for candidate in response.candidates:
 #             return [part.text for part in candidate.content.parts]
-
+path = "/app/app/ONDC_GCP.json"
+google_cred = os.environ.get('google_cred')
+if google_cred:
+    with open(path, 'w') as json_file:
+        pass 
+    with open(path, 'w') as json_file:
+        json.dump(google_cred,json_file)
 
 
 
 # load_dotenv()
 genai.configure(api_key="AIzaSyAHQgKDHnhKHV9mx8I_zhl93OfpPLPiirE")
-# os.environ['GOOGLE_APPLICATION_CREDENTIALS'] = "/app/app/ONDC_GCP.json"
+os.environ['GOOGLE_APPLICATION_CREDENTIALS'] = "/app/app/ONDC_GCP.json"
 client = storage.Client()
 bucket_name = 'ondc_images'
 
