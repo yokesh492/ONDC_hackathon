@@ -15,6 +15,7 @@ import re
 #             return [part.text for part in candidate.content.parts]
 path = "/app/app/ONDC_GCP.json"
 google_cred = os.environ.get('google_cred')
+print(google_cred)
 if google_cred:
     with open(path, 'w') as json_file:
         pass 
@@ -22,7 +23,9 @@ if google_cred:
         json.dump(google_cred,json_file)
 
 
-
+with open(path, 'r') as json_file:
+    data = json.load(json_file)
+print("after_writing",data)
 # load_dotenv()
 genai.configure(api_key="AIzaSyAHQgKDHnhKHV9mx8I_zhl93OfpPLPiirE")
 os.environ['GOOGLE_APPLICATION_CREDENTIALS'] = "/app/app/ONDC_GCP.json"
