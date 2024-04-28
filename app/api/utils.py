@@ -124,8 +124,9 @@ async def get_gemini_response(image_data):
             "variants" : convert_variants_format(text["variants"])
         }
         return text
-    except: 
-        return ("please provide another image file")
+    except exceptions as e:
+        print(f'error message: {e}')
+        print("please provide another image file")
 
 def process_image(uploaded_file: UploadFile):
     if uploaded_file.content_type not in ["image/jpeg", "image/png"]:
