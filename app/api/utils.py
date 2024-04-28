@@ -124,7 +124,7 @@ async def get_gemini_response(image_data):
             "variants" : convert_variants_format(text["variants"])
         }
         return text
-    except exceptions as e:
+    except Exception as e:
         print(f'error message: {e}')
         print("please provide another image file")
 
