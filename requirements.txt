@@ -11,3 +11,5 @@ passlib
 databases
 asyncpg
 pg8000
+cloud-sql-python-connector
+google-cloud

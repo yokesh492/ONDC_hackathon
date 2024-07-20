@@ -6,14 +6,14 @@ Base = declarative_base()
 
 class User(Base):
     __tablename__ = "users"
-    id = Column(Integer, primary_key=True)
+    id = Column(Integer, primary_key=True, index=True)
     username = Column(String, unique=True, index=True)
-    password = Column(String)  # Correct
+    password = Column(String)
     products = relationship("Product", back_populates="owner")  
 
 class Product(Base):
     __tablename__ = "products"
-    id = Column(Integer, primary_key=True)
+    id = Column(Integer, primary_key=True, index=True)
     name = Column(JSON)
     description = Column(JSON)
     category = Column(String)
@@ -24,7 +24,7 @@ class Product(Base):
 
 class Catalog(Base):
     __tablename__ = "catalogs"
-    id = Column(Integer, primary_key=True)
+    id = Column(Integer, primary_key=True, index=True)
     sku_id = Column(String)
     inv = Column(Integer)
     price = Column(Integer)
@@ -33,6 +33,3 @@ class Catalog(Base):
     image = Column(String)
     pid = Column(Integer, ForeignKey("products.id"))
     product = relationship("Product", back_populates="catalogs")
-
-
-

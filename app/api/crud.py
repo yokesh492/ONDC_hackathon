@@ -1,12 +1,10 @@
 from sqlalchemy.orm import Session
-from app.api import models,schemas,auth
+from app.api import models, schemas, auth
 import json
 from typing import Any
 
-def get_catalogue_by_user_id(db: Session, user_id: int):
-    return db.query(models.Catalogue).filter(models.Catalogue.user_id == user_id).all()
-
-def get_user(db, username: str):
+# User CRUD operations
+def get_user(db: Session, username: str):
     return db.query(models.User).filter(models.User.username == username).first()
 
 def create_user(db: Session, user: schemas.UserCreate):
@@ -17,24 +15,28 @@ def create_user(db: Session, user: schemas.UserCreate):
     db.refresh(db_user)
     return db_user
 
-# Inside crud.py or similar module
-
-def create_product(db: Session, item: schemas.CatalogItemCreate,user_id: int) -> models.Product:
+# Product CRUD operations
+def create_product(db: Session, item: schemas.ProductCatalogCreate, user_id: int) -> models.Product:
     db_product = models.Product(
         name=item.name,
         description=item.description,
         category=item.category,
         sub_categories=item.sub_categories,
-        user_id=user_id  # Assuming the user_id is part of the Product schema
+        user_id=user_id
     )
     db.add(db_product)
     db.commit()
     db.refresh(db_product)
     return db_product
 
-def create_catalog(db: Session, item: schemas.CatalogItemCreate, user_id: int) -> models.Catalog:
-    #variants_dicts = [variant.dict() for variant in item.variants]
-    #variants_json = json.dumps(variants_dicts)
+def get_products_by_user_id(db: Session, user_id: int):
+    return db.query(models.Product).filter(models.Product.user_id == user_id).all()
+
+def get_product_by_id(db: Session, product_id: int):
+    return db.query(models.Product).filter(models.Product.id == product_id).first()
+
+# Catalog CRUD operations
+def create_catalog(db: Session, item: schemas.ProductCatalogCreate, user_id: int) -> models.Catalog:
     db_catalog = models.Catalog(
         sku_id=item.sku_id,
         inv=item.inv,
@@ -49,28 +51,24 @@ def create_catalog(db: Session, item: schemas.CatalogItemCreate, user_id: int) -
     db.refresh(db_catalog)
     return db_catalog
 
-def get_products_by_user_id(db: Session, user_id: int):
-    return db.query(models.Product).filter(models.Product.user_id == user_id).all()
-
-def get_catalog_by_product_id(db: Session, product_id: int):
-    return db.query(models.Catalog).filter(models.Catalog.pid == product_id).all()
-# In crud.py
-
 def get_catalog_by_id(db: Session, catalog_id: int):
     return db.query(models.Catalog).filter(models.Catalog.id == catalog_id).first()
 
-def get_product_by_id(db: Session, product_id: int):
-    return db.query(models.Product).filter(models.Product.id == product_id).first()
+def get_catalog_by_product_id(db: Session, product_id: int):
+    return db.query(models.Catalog).filter(models.Catalog.pid == product_id).all()
 
 def delete_product_and_catalogs(db: Session, catalog_id: int) -> Any:
-    catalog = db.query(models.Catalog).filter(models.Catalog.id == catalog_id).first()   
+    catalog = db.query(models.Catalog).filter(models.Catalog.id == catalog_id).first()
     if catalog is None:
-        return {"message": "Catalog not found"} 
-    product_id = catalog.pid    
+        return {"message": "Catalog not found"}
+    
+    product_id = catalog.pid
     db.delete(catalog)
-    db.commit()   
+    db.commit()
+    
     other_catalogs = db.query(models.Catalog).filter(models.Catalog.pid == product_id).all()
     if not other_catalogs:
         db.query(models.Product).filter(models.Product.id == product_id).delete()
-        db.commit()     
+        db.commit()
+    
     return {"message": "Catalog and, if applicable, product deleted successfully"}

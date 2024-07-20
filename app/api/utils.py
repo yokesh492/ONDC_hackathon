@@ -8,7 +8,7 @@ import os
 import google.generativeai as genai
 import json
 import re
-
+import requests
 
 
 # for candidate in response.candidates:
@@ -19,8 +19,8 @@ import re
 
 # load_dotenv()
 genai.configure(api_key="AIzaSyAHQgKDHnhKHV9mx8I_zhl93OfpPLPiirE")
-os.environ['GOOGLE_APPLICATION_CREDENTIALS'] = "/app/app/ONDC_GCP.json"
-client = storage.Client()
+# os.environ['GOOGLE_APPLICATION_CREDENTIALS'] = "app/app/ONDC_GCP.json"
+# client = storage.Client()
 bucket_name = 'ondc_hackathonimage'
 
 generation_config = {"max_output_tokens": 3048}
@@ -245,3 +245,14 @@ async def upload_image_to_gcs(uploaded_file: UploadFile):
     image_url = f'https://storage.googleapis.com/{bucket_name}/{blob.name}'
     image_url = blob.public_url
     return  image_url
+
+async def upload_image_vps_bucket(uploaded_file: UploadFile):
+    url = "https://bucket.vizdale.com/upload"  # Replace with your actual domain or IP address
+    files = {'file': (uploaded_file.filename, uploaded_file.file, uploaded_file.content_type)}
+    response = requests.post(url, files=files)
+    
+    if response.status_code == 201:
+        image_url = response.json().get('url')
+        return image_url
+    else:
+        response.raise_for_status()
